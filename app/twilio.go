@@ -15,13 +15,6 @@ func NotFound(w http.ResponseWriter, req *http.Request) {
 	render(w, 404, errorsJSON("Not found"))
 }
 
-func Stub(c context.Context, w http.ResponseWriter, req *http.Request) {
-	_ = appengine.NewContext(req)
-	render(w, 200, map[string]interface{}{
-		"stub": true,
-	})
-}
-
 type TwilioSMSRequestData struct {
 	MessageSid          string
 	SmsSid              string
@@ -53,7 +46,7 @@ type TwiML struct {
 }
 
 // https://www.twilio.com/docs/api/twiml/sms/twilio_request#twilio-data-passing
-func TwilioIncomming(c context.Context, w http.ResponseWriter, req *http.Request) {
+func TwilioInbound(c context.Context, w http.ResponseWriter, req *http.Request) {
 	ctx := appengine.NewContext(req)
 
 	data := new(TwilioSMSRequestData)

@@ -24,10 +24,12 @@ func init() {
 
 	mux.Use(corz.Handler)
 	mux.UseC(Recoverer)
-	mux.UseC(Authenticator)
 
-	mux.HandleFuncC(pat.Get("/:key"), Stub)
-	mux.HandleFuncC(pat.Post("/:key/sms"), TwilioIncomming)
+	mux.HandleFuncC(pat.Get("/fitbit/auth"), FitbitAuth)
+	mux.HandleFuncC(pat.Get("/fitbit/auth/callback"), FitbitAuthCallback)
+	mux.HandleFuncC(pat.Get("/fitbit/playground"), FitbitPlayground)
+	mux.HandleFuncC(pat.Post("/twilio/inbound"), TwilioInbound)
+
 	mux.HandleFunc(pat.Get("/*"), NotFound)
 
 	http.Handle("/", mux)
